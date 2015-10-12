@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<magentothem translate="label" module="catthumb">
+			<label>Magentothem</label>
+			<sort_order>205</sort_order>
+		</magentothem>
+	</tabs>
+	<sections>
+		<catthumb translate="label" module="catthumb">
+			<label>Categories Thumb Slider</label>
+			<tab>magentothem</tab>
+			<sort_order>142</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<catthumb_config translate="label">
+					<label>Categories Thumb Slider Config</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<enabled translate="label comment">
+							<label>Enabled: </label>
+							<frontend_type>select</frontend_type>
+							<source_model>
+								adminhtml/system_config_source_yesno
+							</source_model>
+							<sort_order>0</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>							
+						</enabled>
+						<auto translate="label comment">
+							<label>Auto slide: </label>
+							<frontend_type>select</frontend_type>
+							<source_model>
+								adminhtml/system_config_source_yesno
+							</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>							
+						</auto>
+						<title translate="label">
+                            <label>Title: </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+						<speed translate="label">
+							<label>Slide Speed: </label>
+							<frontend_type>text</frontend_type>
+							<sort_order>16></sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_store>1</show_in_store>
+							<show_in_website>1</show_in_website>
+						</speed>
+                        <width_thumbnail translate="label">
+                            <label>Width of Thumbnail: </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>28</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </width_thumbnail>						
+                        <height_thumbnail translate="label">
+                            <label>Height of Thumbnail: </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </height_thumbnail>            
+					</fields>
+				</catthumb_config>
+			</groups>
+		</catthumb>
+	</sections>
+</config>

@@ -1,0 +1,16 @@
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('group_modunl')->toHtml() ?>
+<div class="blog-slider">
+	<div class="container">
+		<div class="container-inner">
+			<?php  echo $this->getLayout()->createBlock('blog/menu_sidebar')->setTemplate('magentothem_blog/blog_slide.phtml')->toHtml(); ?>
+		</div>
+	</div>
+</div>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('newletter_subscribe')->toHtml() ?>
+<div class="brand-slider">
+	<div class="container">
+		<div class="container-inner">
+			<?php  echo $this->getLayout()->createBlock('brandslider/brandslider')->setTemplate('magentothem/brandslider/brandslider.phtml')->toHtml(); ?>
+		</div>
+	</div>
+</div>

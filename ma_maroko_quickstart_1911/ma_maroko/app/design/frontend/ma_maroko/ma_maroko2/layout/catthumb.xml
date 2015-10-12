@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <cms_index_index>
+        <reference name="head">
+			<action method="addCss"><stylesheet>magentothem/css/owl.carousel.css</stylesheet></action>
+			<action method="addJs"><script>magentothem/ma.jq.slide.js</script></action>
+			<action method="addJs"><script>magentothem/owl.carousel.js</script></action>
+		 </reference>
+
+		 <block type="catthumb/catthumb" name="catthumb">
+			<action method="setTemplate">
+				<template>magentothem/catthumb/catthumb.phtml</template>
+			</action>
+		</block>  
+
+		<!-- Top content -->
+		<!-- <reference name="content">
+			<action method="insert" ifconfig="catthumb/catthumb_config/enabled">
+				<block>catthumb</block>
+			</action>
+		</reference> -->
+
+		<!-- Bootom content -->
+	<!--     <reference name="content">
+			<action method="append" ifconfig="catthumb/catthumb_config/enabled">
+				<block>catthumb</block>
+			</action>
+		</reference> -->
+
+	<reference name="ma_banner">
+		<block type="catthumb/catthumb" name="catthumb" after="banner7" template="magentothem/catthumb/catthumb.phtml" />
+	</reference>
+
+	</cms_index_index>
+
+</layout> 

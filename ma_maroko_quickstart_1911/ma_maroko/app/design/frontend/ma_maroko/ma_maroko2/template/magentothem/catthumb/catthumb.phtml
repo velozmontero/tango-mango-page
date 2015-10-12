@@ -1,0 +1,54 @@
+<?php
+
+if(!$this->getSliderCfg('enabled')) return;
+
+$_categories = $this->getCategories();
+if(count($_categories)){
+
+	?>
+
+	<div class= "catthumb">
+			<h2 class ="title">
+				<?php 
+				echo $this->__($this->getSliderCfg('title'))
+				?>
+			</h2>
+		<ul id="catthumb">
+			<?php
+			$widthImage  = $this->getSliderCfg('width_thumbnail');
+			$heightImage = $this->getSliderCfg('height_thumbnail');
+			foreach ($_categories as $category) {
+				echo 
+				'<li class="item">
+				<div class="catthumb-title"><h3 class ="title"><a href="'.$category->getUrl().'">'.$category->getName().'</a></h3></div>
+				<p class ="desc">'.$category->getDescription().'</p>
+				<img src="'.$this->getCatResizedSlider($category, $widthImage, $heightImage, 100).'" alt="'.$category->getName().'" />
+			</li>';
+		}
+
+		?>
+	</ul>
+</div>
+
+<script type="text/javascript">
+	$jq(document).ready(function(){
+		$jq("#catthumb").owlCarousel({
+			autoPlay : <?php if($this->getSliderCfg('auto')) echo 'true'; else echo 'false'; ?>,
+			items : 4,
+			itemsDesktop : [1199,4],
+			itemsDesktopSmall : [980,4],
+			itemsTablet: [768,3],
+			itemsMobile : [479,2],
+			slideSpeed : <?php if($this->getSliderCfg('speed')) echo $this->getSliderCfg('speed'); else echo '500'; ?>,
+			paginationSpeed : <?php if($this->getSliderCfg('speed')) echo $this->getSliderCfg('speed'); else echo '500'; ?>,
+			rewindSpeed : <?php if($this->getSliderCfg('speed')) echo $this->getSliderCfg('speed'); else echo '500'; ?>,
+			navigation : true,
+			stopOnHover : true,
+			pagination : true,
+			scrollPerPage:true,
+		});
+	});
+</script>
+<?php
+}
+?>
