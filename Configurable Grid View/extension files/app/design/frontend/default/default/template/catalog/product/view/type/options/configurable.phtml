@@ -1,0 +1,136 @@
+<?php
+/**
+ * ModuleMart_Configurablegridview extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Module-Mart License
+ * that is bundled with this package in the file license.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.modulemart.com/license.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to modules@modulemart.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * versions in the future. If you wish to customize this extension for your
+ * needs please refer to http://www.modulemart.com for more information.
+ *
+ * @category   ModuleMart
+ * @package    ModuleMart_Configurablegridview
+ * @author-email  modules@modulemart.com
+ * @copyright  Copyright 2014 © modulemart.com. All Rights Reserved
+ */
+?>
+<?php
+$_product    = $this->getProduct();
+$associative_products = $this->getProduct()->getTypeInstance()->getUsedProducts();
+$_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+?>
+<?php if(!$this->getIsEnabled()) { 
+	if ($_product->isSaleable() && count($_attributes)):?>
+    <dl>
+    <?php foreach($_attributes as $_attribute): ?>
+        <dt><label><?php echo $_attribute->getLabel() ?><span class="required">&nbsp;*</span></label></dt>
+        <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
+          <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
+            <option><?php echo $this->__('Choose an Option...') ?></option>
+          </select>
+        </dd>
+    <?php endforeach; ?>
+    </dl>
+    <script type="text/javascript">
+        var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+    </script>
+<?php endif; 
+	} else { ?>
+ <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('modulemart/configurablegridview/css/configurablegridview.css') ?>">   
+<?php 
+	 $assc_product_data = array();
+      $labels = array();
+      $options = array();
+      $store = Mage::app()->getStore();
+	  foreach ($associative_products as $assc_products) {
+		  
+		  $productAttributes = $this->getAllowAttributes();
+
+		 if($assc_products->getStatus() == 1){
+			 if($assc_products->isSaleable()) {
+			 $stock = number_format(Mage::getModel('cataloginventory/stock_item')->loadByProduct($assc_products)->getQty());
+			 
+			 $assc_product_data[$assc_products->getId()]['info'] = array('price' => 0, 'qty' => $stock, 'prod_id'=>$assc_products->getId());
+
+			 foreach ($productAttributes as $attribute) {
+				 
+				$_attributePrice = $attribute->getPrices();
+				$labels[$attribute->getLabel()] = $attribute->getLabel();
+				
+				$value = $assc_products->getResource()->getAttribute($attribute->getProductAttribute()->getAttributeCode())->getFrontend()->getValue($assc_products);
+				$options[$value] = $value;
+				$att_array = array('code' => $attribute->getProductAttribute()->getAttributeCode(), 'label' => $attribute->getLabel(), 'value' => $value, 'attribute_id' => $attribute->getAttributeId());
+				
+			foreach($_attributePrice as $optionVal){
+			  if($optionVal['label'] == $value){
+				$att_array['option_id'] = $optionVal['value_index'];
+			  }
+			}
+			$assc_product_data[$assc_products->getId()]['attributes'][] = $att_array;
+		  }
+		 }
+	  }
+	 }
+	  $assc_product_data = $assc_product_data;
+      $configurable_products = array('num_attributes' => count($this->getAllowAttributes()), 'products' => $assc_product_data, 'labels' => $labels, 'options' => $options);
+	  ?>
+
+<div id="product-table">
+  
+	  	<table class="configurable-product-table" cellspacing="0">
+        <tr>
+        <input type="hidden" name="configurable_grid_table" value="Yes" />
+		<input type="hidden" name="products" value="<?php echo $_product->getId(); ?>"/>
+		<?php
+        foreach($configurable_products['labels'] as $_label ) { ?>
+        	<th><?php echo $_label; ?></th>
+        <?php } ?>
+        <?php if($this->getStockEnabled()):?>
+        	<th><?php echo $this->__('Availability'); ?></th>
+        <?php endif;?>
+        <th>&nbsp;</th>
+        </tr>
+         <?php
+		 foreach($configurable_products['products'] as $productVal){ ?>
+        <tr>
+        <?php
+        foreach($productVal['attributes'] as $att){ ?>
+        <?php $hidden_super_val = '<input type="hidden" name="super_attribute_quickshop['.$productVal['info']['prod_id'].']['.$att['attribute_id'].']" value="'.$att['option_id'].'">';?>
+          <td><?php echo $att['value'].$hidden_super_val; ?>         
+          </td>
+          <?php
+        } 
+		?>
+        <?php
+          if($productVal['info']['qty'] > 0){
+            $qty_label = 'In stock';
+			$disabled = '';
+          }elseif($productVal['info']['qty'] == 0){
+            $qty_label = 'Out of stock';
+			$disabled = 'disabled';
+          }
+		  ?>
+         	<?php if($this->getStockEnabled()):?>
+            <td><?php echo $qty_label; ?></td>
+            <?php endif;?>
+          <td>
+                <input type="number" min="0" max="200" name="config_table_qty[<?php echo $productVal['info']['prod_id']; ?>]" value="0" <?php echo $disabled; ?> id="super_group_qty_<?php echo $productVal['info']['prod_id'];?>">
+            </td>
+       </tr>
+
+       <?php
+      }
+	  ?>
+      </table>
+</div>
+<?php } ?>

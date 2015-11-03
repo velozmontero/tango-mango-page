@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ModuleMart_Configurablegridview extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Module-Mart License
+ * that is bundled with this package in the file license.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.modulemart.com/license.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to modules@modulemart.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * versions in the future. If you wish to customize this extension for your
+ * needs please refer to http://www.modulemart.com for more information.
+ *
+ * @category   ModuleMart
+ * @package    ModuleMart_Configurablegridview
+ * @author-email  modules@modulemart.com
+ * @copyright  Copyright 2014 © modulemart.com. All Rights Reserved
+ */
+-->
+<config>
+    <modules>
+        <ModuleMart_Configurablegridview>
+            <version>0.1.0</version>
+        </ModuleMart_Configurablegridview>
+    </modules>
+    <frontend>
+        <routers>
+            <configurablegridview>
+                <use>standard</use>
+                <args>
+                    <module>ModuleMart_Configurablegridview</module>
+                    <frontName>configurablegridview</frontName>
+                </args>
+            </configurablegridview>
+			<checkout>
+             <args>
+                 <modules>
+                    <ModuleMart_Configurablegridview before="Mage_Checkout">ModuleMart_Configurablegridview</ModuleMart_Configurablegridview>
+                </modules>
+             </args>
+        </checkout>	
+        </routers>
+    </frontend>
+    <admin>
+        <routers>
+			<configurablegridview>
+				<use>admin</use>
+				<args>
+					<module>ModuleMart_Configurablegridview</module>
+					<frontName>configurablegridview</frontName>
+				</args>
+			</configurablegridview>
+        </routers>
+    </admin>
+    <adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<ModuleMart_Configurablegridview>
+							<title>Configurablegridview Module</title>
+							<sort_order>10</sort_order>
+						</ModuleMart_Configurablegridview>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+    </adminhtml>   
+    <global>
+		<blocks>
+			<catalog>
+				<rewrite>
+					<product_view_type_configurable>ModuleMart_Configurablegridview_Block_Configurablegridview</product_view_type_configurable>
+				</rewrite>
+			</catalog>
+		</blocks>
+		<rewrite>
+			<modulemart_configurablegridview_cart>
+				<from><![CDATA[#^/checkout/cart/#]]></from>
+				<to>/configurablegridview/cart/</to>
+			</modulemart_configurablegridview_cart>
+		</rewrite>
+        <helpers>
+            <configurablegridview>
+                <class>ModuleMart_Configurablegridview_Helper</class>
+            </configurablegridview>
+        </helpers>
+    </global>
+	<default>
+		<configurablegridview>
+			<settings>
+				<is_enabled>1</is_enabled>
+				<enable_stock_avail>1</enable_stock_avail>
+			</settings>
+		</configurablegridview>
+	</default>
+</config>

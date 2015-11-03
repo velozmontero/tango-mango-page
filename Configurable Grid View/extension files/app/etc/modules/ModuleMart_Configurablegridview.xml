@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ModuleMart_Configurablegridview>
+            <active>true</active>
+            <codePool>local</codePool>
+        </ModuleMart_Configurablegridview>
+    </modules>
+</config> 
